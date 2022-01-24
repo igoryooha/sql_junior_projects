@@ -27,3 +27,17 @@ SELECT bayes_theory ( -- запускаем функцию
 		0.98, -- вводим второй аргумент
 		0.999 -- вводим третий аргумент
 				); -- при выполнении выдас результат (вероятность события "aa" при событие "B")
+
+-- та же самая функция, но короче ( без декларации переменных)
+
+CREATE OR REPLACE FUNCTION bayes_theory
+(B_bb float4, 
+B_aa float4,
+bb float4,
+OUT aa_B float8)-- вероятность b при a )
+AS
+$$
+	BEGIN
+		aa_B = (B_aa * (1 - bb)) / (B_aa * (1 - bb) + (B_bb * bb));
+	END;
+$$ LANGUAGE plpgsql;
